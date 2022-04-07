@@ -28,3 +28,30 @@ const str = `<ul>
 <li data-time="5:59">Redux Video</li>
 <li data-time="3:31">Flexbox Video</li>
 </ul>`;
+
+function getVideos(str){
+    return str
+        .replace('<ul>','')
+        .replace('</ul>','')
+        .split('</li>')
+        .slice(0, -1)
+        .map(video => ({
+            type: video.split('>')[1],
+            min: parseInt(video.split('"')[1].split(':')[0]),
+            seg: parseInt(video.split('"')[1].split(':')[1])
+        }))       
+}
+
+function totalSegXTipo(videos, type){
+    let totalSegundos = 0;
+    videos
+        .filter(video => video.type === type)
+        .forEach(video => totalSegundos = totalSegundos + video.seg + video.min * 60);
+
+    return totalSegundos;
+    // Desafio: Hay otra forma de totalizar utilizando reduce
+}
+
+console.log(getVideos(str));
+
+console.log(totalSegXTipo(getVideos(str), "Flexbox Video"));
