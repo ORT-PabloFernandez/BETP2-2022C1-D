@@ -1,7 +1,7 @@
 const fs = require('fs');
 const PATH = './inventors.json';
 
-let inventors = JSON.parse(fs.readFileSync(PATH, 'utf-8'));
+let inventors = JSON.parse(fs.readFile(PATH, 'utf-8'));
 
 // TODO 1: Del archivo inventors.json mostrar por consola los nacidos despues del 1800
 //inventors = JSON.parse(inventors);
