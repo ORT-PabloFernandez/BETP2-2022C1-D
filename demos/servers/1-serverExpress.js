@@ -35,10 +35,8 @@ app.post('/api/inventors', (req, res) =>{
     // const inventorNuevo = {
     //     _id: 8, first: 'Fernando', last: 'Fernandez', year: 2000
     // };
-    console.log(req);
+    // console.log(req);
     const inventorNuevo = req.body;
-
-
     inventorNuevo._id = 8;
     res.json(inventorNuevo);
 });
