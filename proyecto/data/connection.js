@@ -1,7 +1,8 @@
+require('dotenv').config();
 const mongoclient = require('mongodb').MongoClient;
 
 //TODO: reemplazar con variables de entorno
-const uri = "mongodb+srv://admin:tp2@cluster0.ca7f0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = process.env.MONGO_URI;
 
 const client = new mongoclient(uri);
 
@@ -13,4 +14,3 @@ async function getConnection(){
 }
 
 module.exports = {getConnection};
-
