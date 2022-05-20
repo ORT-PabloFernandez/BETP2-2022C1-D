@@ -1,5 +1,8 @@
+require('dotenv').config();
 const connection = require('./connection');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 async function getAllUsers(){
     const connectiondb = await connection.getConnection();
@@ -23,4 +26,30 @@ async function addUser(user){
     return user;
 }
 
-module.exports = {getAllUsers, addUser} ;
+async function findByCredential(email, password){
+    const connectiondb = await connection.getConnection();
+    const user = await connectiondb
+                            .db('sample_tp2')
+                            .collection('users')
+                            .findOne({email: email});
+    
+    if(!user){
+        throw new Error('Credenciales no validas');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if(!isMatch){
+        throw new Error('Credenciales no validas');
+    }
+    
+    return user;
+}
+
+function generatedToken(user){
+    
+    const token = jwt.sign({_id: user._id, email: user.email}, process.env.CLAVESECRETA, {expiresIn: "2h"});
+    return token;
+}
+
+module.exports = {getAllUsers, addUser, findByCredential, generatedToken} ;

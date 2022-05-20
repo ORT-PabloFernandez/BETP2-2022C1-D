@@ -15,4 +15,16 @@ router.post('/', async (req, res) =>{
   res.status(201).json(result);
 });
 
+router.post('/login', async (req, res)=>{
+  try {
+    const user = await data.findByCredential(req.body.email, req.body.password);
+    const token = data.generatedToken(user);
+    res.send({user, token});
+
+  } catch (error) {
+      console.log(error);
+      res.status(401).send(error.message);
+  }
+});
+
 module.exports = router;
